@@ -61,15 +61,15 @@ public class Pokemon {
      * Constructs a new Pokemon with a 6-sided die, 20-sided die, 0 hit points, attack level of 0,
      * defense level of 0, and an empty name.
      */
-    public Pokemon() {
+    public Pokemon(String inputName, int HP, int attack, int defense) {
         final int d6num = 6;
         final int d20num = 20;
         this.d6 = new Dice(d6num);
         this.d20 = new Dice(d20num);
-        this.hitPoints = 0;
-        this.attackLevel = 0;
-        this.defenseLevel = 0;
-        this.name = "";
+        this.hitPoints = HP;
+        this.attackLevel = attack;
+        this.defenseLevel = defense;
+        this.name = inputName;
     }
 
     /**

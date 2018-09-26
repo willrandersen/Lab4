@@ -34,7 +34,7 @@ public class Colosseum {
      * Input scanner. Use this to take in user's input for buildPokemon(). <br>
      * Useful functions: next(), nextInt() .
      */
-    static Scanner myScan;
+    static Scanner scanner;
 
     /**
      * How we will build our Pokemon to battle.
@@ -71,8 +71,16 @@ public class Colosseum {
      *         <p>
      *         Implement this function.
      */
-    public static Pokemon buildPokemon() {
-        Pokemon tempPokemon = new Pokemon();
+    public static Pokemon buildPokemon(final String theName, final int theHP, int attack, final int defense) {
+        if (attack > 50) {
+            attack = 50;
+        }
+
+        if (attack + defense < 50) {
+            defense = 50 - attack;
+        }
+
+        Pokemon tempPokemon = new Pokemon(theName, theHP, attack, defense);
         return tempPokemon;
     }
 
@@ -90,7 +98,13 @@ public class Colosseum {
      * Implement this function.
      */
     public static void printWhoIsAhead() {
-        System.out.println("Implement me!");
+        if (firstPokemon.hitPoints > secondPokemon.hitPoints) {
+            System.out.println(firstPokemon.name + " is currently ahead!");
+        } else if (firstPokemon.hitPoints < secondPokemon.hitPoints) {
+            System.out.println(secondPokemon.name + " is currently ahead!");
+        } else {
+            System.out.println("It is currently tied!");
+        }
     }
 
     /**
@@ -101,7 +115,12 @@ public class Colosseum {
      * Write this function.
      */
     public static void determineWinner() {
-        System.out.println("Implement me!");
+        if (firstPokemon.hitPoints > 0) {
+            System.out.println(firstPokemon.name + " has won!!");
+        } else {
+            System.out.println(secondPokemon.name + " has won!!");
+
+        }
     }
 
     /**
@@ -111,16 +130,35 @@ public class Colosseum {
      */
     public static void initializePokemon() {
         System.out.println("Player 1, build your Pokemon!");
-        System.out.println("=================");
-        firstPokemon = buildPokemon();
-        firstPokemon.name = "Chuchu";
+        System.out.println("Input name");
+        String name = scanner.next();
+        System.out.println("Input Hit Points(1 - " + MAX_HIT_POINTS + "): ");
+        int hitPoint = scanner.nextInt();
 
+        System.out.println("Attack Level ");
+        int attackLevel = scanner.nextInt();
+
+        System.out.println("Defense Level ");
+        int defenseLevel = scanner.nextInt();
+
+        firstPokemon = buildPokemon(name, hitPoint, attackLevel, defenseLevel);
         System.out.println("");
 
         System.out.println("Player 2, build your Pokemon!");
         System.out.println("==================");
-        secondPokemon = buildPokemon();
-        secondPokemon.name = "Xyz";
+        System.out.println("Input name");
+        name = scanner.next();
+
+        System.out.println("Input Hit Points(1 -" + MAX_HIT_POINTS + "): ");
+        hitPoint = scanner.nextInt();
+
+        System.out.println("Attack Level ");
+        attackLevel = scanner.nextInt();
+
+        System.out.println("Defense Level ");
+        defenseLevel = scanner.nextInt();
+
+        secondPokemon = buildPokemon(name, hitPoint, attackLevel, defenseLevel);
     }
 
     /**
@@ -145,7 +183,7 @@ public class Colosseum {
              * Swap Pokemon for second outcome.
              */
             System.out.print("second");
-            Pokemon tempPokemon = new Pokemon();
+            Pokemon tempPokemon;
             tempPokemon = firstPokemon;
             firstPokemon = secondPokemon;
             secondPokemon = tempPokemon;
@@ -159,7 +197,7 @@ public class Colosseum {
      * @param unused unused input arguments.
      */
     public static void main(final String[] unused) {
-        myScan = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         initializePokemon();
         determineOrder();
         System.out.println("");
@@ -181,6 +219,7 @@ public class Colosseum {
                 }
 
             }
+            scanner.next();
         }
         System.out.println("");
 
@@ -190,6 +229,6 @@ public class Colosseum {
             determineWinner();
         }
 
-        myScan.close();
+        scanner.close();
     }
 }
